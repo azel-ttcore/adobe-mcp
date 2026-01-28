@@ -1,10 +1,9 @@
 {
   "platform": "windows",
   "adobePaths": {
-    "photoshop": "C:\\Program Files\\Adobe\\Adobe Photoshop 2024\\Photoshop.exe",
-    "premiere": "C:\\Program Files\\Adobe\\Adobe Premiere Pro 2024\\Adobe Premiere Pro.exe",
-    "illustrator": "C:\\Program Files\\Adobe\\Adobe Illustrator 2024\\Support Files\\Contents\\Windows\\Illustrator.exe",
-    "indesign": "C:\\Program Files\\Adobe\\Adobe InDesign 2024\\InDesign.exe"
+    "photoshop": "C:\\Program Files\\Adobe\\Adobe Photoshop 2026\\Photoshop.exe",
+    "illustrator": "C:\\Program Files\\Adobe\\Adobe Illustrator 2026\\Support Files\\Contents\\Windows\\Illustrator.exe",
+    "indesign": "C:\\Program Files\\Adobe\\Adobe InDesign 2026\\InDesign.exe"
   },
   "proxy": {
     "host": "localhost",
@@ -14,9 +13,5 @@
   "mcp": {
     "timeout": 30,
     "logLevel": "INFO"
-  },
-  "python": {
-    "venv": ".venv",
-    "interpreter": "python"
   }
 }

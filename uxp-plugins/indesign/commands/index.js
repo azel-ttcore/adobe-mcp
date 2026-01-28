@@ -25,6 +25,14 @@
 //const openfs = require('fs')
 const {app, DocumentIntentOptions} = require("indesign");
 
+// Import command modules
+const { getParagraphStyles, createParagraphStyle, applyParagraphStyle } = require("./styles.js");
+const { createTextFrame, getTextFrames, linkTextFrames, insertText } = require("./textframes.js");
+const { placeImage, getImages, placeImageFromWord } = require("./images.js");
+const { addPage, getPages, getMasterPages } = require("./pages.js");
+const { openDocument, saveDocument, exportPdf } = require("./documents.js");
+const { layoutWordContent } = require("./layout.js");
+
 
 const createDocument = async (command) => {
     console.log("createDocument")
@@ -83,7 +91,37 @@ const parseAndRouteCommand = async (command) => {
 
 
 const commandHandlers = {
-    createDocument
+    // Document creation
+    createDocument,
+    
+    // Document management
+    openDocument,
+    saveDocument,
+    exportPdf,
+    
+    // Paragraph styles
+    getParagraphStyles,
+    createParagraphStyle,
+    applyParagraphStyle,
+    
+    // Text frames
+    createTextFrame,
+    getTextFrames,
+    linkTextFrames,
+    insertText,
+    
+    // Images
+    placeImage,
+    getImages,
+    placeImageFromWord,
+    
+    // Pages
+    addPage,
+    getPages,
+    getMasterPages,
+    
+    // Word import layout
+    layoutWordContent
 };
 
 
@@ -112,11 +150,11 @@ const getActiveDocumentSettings = (command) => {
 }
 
 const checkRequiresActiveDocument = async (command) => {
-    if (!requiresActiveProject(command)) {
+    if (!requiresActiveDocument(command)) {
         return;
     }
 
-    let document = app.activeDocument
+    let document = app.activeDocument;
     if (!document) {
         throw new Error(
             `${command.action} : Requires an open InDesign document`
@@ -125,7 +163,9 @@ const checkRequiresActiveDocument = async (command) => {
 };
 
 const requiresActiveDocument = (command) => {
-    return !["createDocument"].includes(command.action);
+    // Commands that don't require an active document
+    const noDocRequired = ["createDocument", "openDocument"];
+    return !noDocRequired.includes(command.action);
 };
 
 

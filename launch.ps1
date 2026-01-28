@@ -3,6 +3,8 @@ Write-Host "Adobe MCP Server Launcher" -ForegroundColor Cyan
 Write-Host "========================" -ForegroundColor Cyan
 Write-Host ""
 
+$repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+
 # Check Python
 try {
     python --version | Out-Null
@@ -94,7 +96,7 @@ while ($true) {
         }
         "5" {
             Write-Host "Starting Proxy Server..." -ForegroundColor Green
-            Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd proxy-server; node proxy.js"
+            Start-Process powershell -WorkingDirectory $repoRoot -ArgumentList "-NoExit", "-Command", "Set-Location '$repoRoot\proxy-server'; node proxy.js"
             Write-Host "Proxy server started in new window on port 3001" -ForegroundColor Green
         }
         "6" {
