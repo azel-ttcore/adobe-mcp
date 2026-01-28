@@ -73,7 +73,7 @@ const getUnitForIntent = (intent) => {
         return "px"
     }
 
-    throw new Error(`getUnitForIntent : unknown intent [${intent}]`)
+    return "pt"
 }
 
 const parseAndRouteCommand = async (command) => {

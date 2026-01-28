@@ -35,7 +35,7 @@ const placeImage = async (command) => {
         throw new Error(`Page index ${options.pageIndex} out of range. Document has ${doc.pages.length} pages.`);
     }
     
-    const page = doc.pages[options.pageIndex];
+    const page = doc.pages.item(options.pageIndex);
     
     // Create a rectangle frame for the image
     let width = options.width || 200;
@@ -99,16 +99,16 @@ const getImages = async (command) => {
     
     // Iterate through all pages
     for (let p = 0; p < doc.pages.length; p++) {
-        const page = doc.pages[p];
+        const page = doc.pages.item(p);
         
         // Check rectangles for placed images
         for (let i = 0; i < page.rectangles.length; i++) {
-            const rect = page.rectangles[i];
+            const rect = page.rectangles.item(i);
             
             // Check if rectangle contains an image
             if (rect.images && rect.images.length > 0) {
                 for (let j = 0; j < rect.images.length; j++) {
-                    const img = rect.images[j];
+                    const img = rect.images.item(j);
                     const bounds = rect.geometricBounds;
                     
                     images.push({
@@ -131,7 +131,7 @@ const getImages = async (command) => {
         
         // Also check graphics frames
         for (let i = 0; i < page.allGraphics.length; i++) {
-            const graphic = page.allGraphics[i];
+            const graphic = page.allGraphics.item(i);
             const parent = graphic.parent;
             
             if (parent && parent.geometricBounds) {
@@ -181,7 +181,7 @@ const placeImageFromWord = async (command) => {
         pageIndex = Math.max(0, doc.pages.length - 1);
         
         // Position below existing content or at a default location
-        const page = doc.pages[pageIndex];
+        const page = doc.pages.item(pageIndex);
         const pageHeight = page.bounds[2] - page.bounds[0];
         const pageWidth = page.bounds[3] - page.bounds[1];
         

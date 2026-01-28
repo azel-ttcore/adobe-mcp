@@ -35,7 +35,7 @@ const createTextFrame = async (command) => {
         throw new Error(`Page index ${options.pageIndex} out of range. Document has ${doc.pages.length} pages.`);
     }
     
-    const page = doc.pages[options.pageIndex];
+    const page = doc.pages.item(options.pageIndex);
     
     // Create the text frame with geometric bounds [y1, x1, y2, x2]
     const bounds = [
@@ -76,7 +76,7 @@ const getTextFrames = async (command) => {
     
     const processPage = (page, pageIndex) => {
         for (let i = 0; i < page.textFrames.length; i++) {
-            const frame = page.textFrames[i];
+            const frame = page.textFrames.item(i);
             const bounds = frame.geometricBounds;
             
             frames.push({
@@ -102,10 +102,10 @@ const getTextFrames = async (command) => {
         if (options.pageIndex >= doc.pages.length) {
             throw new Error(`Page index ${options.pageIndex} out of range`);
         }
-        processPage(doc.pages[options.pageIndex], options.pageIndex);
+        processPage(doc.pages.item(options.pageIndex), options.pageIndex);
     } else {
         for (let p = 0; p < doc.pages.length; p++) {
-            processPage(doc.pages[p], p);
+            processPage(doc.pages.item(p), p);
         }
     }
     
@@ -124,9 +124,9 @@ const linkTextFrames = async (command) => {
     let targetFrame = null;
     
     for (let p = 0; p < doc.pages.length; p++) {
-        const page = doc.pages[p];
+        const page = doc.pages.item(p);
         for (let i = 0; i < page.textFrames.length; i++) {
-            const frame = page.textFrames[i];
+            const frame = page.textFrames.item(i);
             if (frame.id.toString() === options.sourceFrameId) {
                 sourceFrame = frame;
             }
@@ -163,9 +163,9 @@ const insertText = async (command) => {
     // Find the frame
     let textFrame = null;
     for (let p = 0; p < doc.pages.length; p++) {
-        const page = doc.pages[p];
+        const page = doc.pages.item(p);
         for (let i = 0; i < page.textFrames.length; i++) {
-            const frame = page.textFrames[i];
+            const frame = page.textFrames.item(i);
             if (frame.id.toString() === options.frameId) {
                 textFrame = frame;
                 break;
@@ -183,11 +183,11 @@ const insertText = async (command) => {
     
     switch (position) {
         case "START":
-            insertionPoint = textFrame.insertionPoints[0];
+            insertionPoint = textFrame.insertionPoints.item(0);
             insertionPoint.contents = options.text;
             break;
         case "END":
-            insertionPoint = textFrame.insertionPoints[-1];
+            insertionPoint = textFrame.insertionPoints.item(-1);
             insertionPoint.contents = options.text;
             break;
         case "REPLACE":
@@ -205,7 +205,7 @@ const insertText = async (command) => {
                 // Apply to the inserted text
                 const story = textFrame.parentStory;
                 if (story && story.paragraphs.length > 0) {
-                    const lastPara = story.paragraphs[-1];
+                    const lastPara = story.paragraphs.item(-1);
                     lastPara.appliedParagraphStyle = style;
                 }
             }

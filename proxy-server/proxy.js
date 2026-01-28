@@ -85,7 +85,7 @@ io.on('connection', (socket) => {
     const senderId = packet.senderId;
   
     if (senderId) {
-      
+      console.log(`Response from ${socket.id} for ${socket.data.application || packet.application || 'unknown'}: ${packet.status}${packet.message ? ` - ${packet.message}` : ''}`);
       io.to(senderId).emit('packet_response', packet);
       console.log(`Sent confirmation to client ${senderId}`);
     } else {

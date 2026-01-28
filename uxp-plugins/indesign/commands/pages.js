@@ -39,7 +39,7 @@ const addPage = async (command) => {
             newPage = doc.pages.add();
         } else {
             // Insert before the page at index
-            const refPage = doc.pages[options.atIndex];
+            const refPage = doc.pages.item(options.atIndex);
             newPage = doc.pages.add(1818653800, refPage); // LocationOptions.BEFORE
         }
     } else {
@@ -62,7 +62,8 @@ const addPage = async (command) => {
     // Find the index of the new page
     let pageIndex = -1;
     for (let i = 0; i < doc.pages.length; i++) {
-        if (doc.pages[i].id === newPage.id) {
+        const page = doc.pages.item(i);
+        if (page && page.id === newPage.id) {
             pageIndex = i;
             break;
         }
@@ -83,7 +84,7 @@ const getPages = async (command) => {
     const pages = [];
     
     for (let i = 0; i < doc.pages.length; i++) {
-        const page = doc.pages[i];
+        const page = doc.pages.item(i);
         const bounds = page.bounds;
         
         pages.push({
@@ -121,7 +122,7 @@ const getMasterPages = async (command) => {
     const masterPages = [];
     
     for (let i = 0; i < doc.masterSpreads.length; i++) {
-        const master = doc.masterSpreads[i];
+        const master = doc.masterSpreads.item(i);
         
         masterPages.push({
             index: i,
